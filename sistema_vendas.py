@@ -32,16 +32,38 @@ while True:
            if qtd_produto <= 0:
               print("Quantidade inválida!")
            elif qtd_produto <= estoque_produtos[id_produto]["quantidade"]:
-               carrinho.append(estoque_produtos[id_produto])
-               estoque_produtos[id_produto]["quantidade"] -= qtd_produto
+                item = {
+                    "qtd" : qtd_produto,
+                    "nome" : estoque_produtos[id_produto]["nome"],
+                    "preco" : estoque_produtos[id_produto]["preco"],
+                    "preco_total": qtd_produto * estoque_produtos[id_produto]["preco"]
+                }
+                carrinho.append(item)
+                estoque_produtos[id_produto]["quantidade"] -= qtd_produto
+                print(item)
+           else:
+               print(f"Quantidade indisponivel, temos apenas {estoque_produtos[id_produto]["quantidade"]} no estoque.")
+
+        else:
+            print("Id informado não existe no estoque!")
 
 
     elif opcao == 3:
-        print("Vizualizar Carrinho!")
+        if carrinho:
+            print(" Vizualizar Carrinho!")
+            subtotal = 0
+            for i in carrinho:
+                print (f"{i["qtd"]}x {i["nome"]} no valor de R$ {i["preco"]}(cada)\nTotal R${i["preco_total"]}")
+                subtotal += i["preco_total"]
+                print(f"Subtotal da Compra R${subtotal}")
+        else:
+             print("Carrinho Vazio!")
+
+
 
     elif opcao == 4:
         print("Finalizar compra!")
 
-    elif opcao == 0
+    elif opcao == 0:
         print("Sair do sistema...")
         break
